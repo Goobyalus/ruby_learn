@@ -21,4 +21,16 @@ end
 def parse_prod(str)
 	digit = parse_digit(str)
 	
+	begin
+		a, str = parse_wchar(str, "*/")
+	rescue
+		return digit
+	end
+	
+	case a
+	when '*' op = :PROD
+	when '/' op = :DIV
+	end
+	
+	return [op, digit, parse_prod(str)]
 end

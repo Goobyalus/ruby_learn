@@ -26,7 +26,7 @@ end
 def parse_num(str)
 	if str =~ /(\A(\d+(\.\d*)?)|(\.\d+))/
 		str[0...$1.length] = ''		#remove matched number from str
-		return $1
+		return $1.to_f
 	end
 	raise "No number to parse in parse_num"
 end
@@ -48,7 +48,7 @@ def parse_prod(str)
 	when '/' then op = :DIV
 	end
 	
-	return [op, digit, parse_prod(str)]
+	return {:op=>op, :lo=>digit, :ro=>parse_prod(str)}
 end
 
 def parse_sum(str)
@@ -65,13 +65,35 @@ def parse_sum(str)
 	when '-' then op = :SUB
 	end
 	
-	return [op, prod, parse_sum(str)]
+	return {:op=>op, :lo=>prod, :ro=>parse_sum(str)}
 end
 
-print "#{parse_sum("1.1+.2*3-444/55.55+.6666")}\n"
+def eval(root)
+	#print "calling eval on #{root}"
+
+	if not root.is_a?(Hash) then return root end
+	lo = root[:lo]
+	ro = root[:ro]
+	
+	case root[:op]
+	when nil then raise "No operator"
+	when :SUM then return eval(lo) + eval(ro)
+	when :SUB then return eval(lo) - eval(ro)
+	when :PROD then return eval(lo) * eval(ro)
+	when :DIV then return eval(lo) / eval(ro)
+	else raise "unsupported operator"
+	end
+end
+
+test_str = "1.1+.2*3-444/55.55+.6666-.0"
+print "\n\ntest_str is: #{test_str}\n\n"
+parse_tree = parse_sum(test_str)
+print "parsing result is: #{parse_tree}\n\n"
+print "eval result is: #{eval(parse_tree)}\n\n"
 
 
 #TODO: use hashes instead of lists
 #TODO: robust - sign
 #TODO: use numbers instead of strings in tree
 #TODO: use numbers instead of digits
+#TODO: use better regex based on /\A[-+]?[0-9]*\.?[0-9]+\Z/

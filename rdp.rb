@@ -16,7 +16,7 @@ def parse_wchar(str, chrs)
 end
 
 def parse_digit(str)
-	return parse_wchar(str, range('0'..'9'))
+	return parse_wchar(str, ('0'..'9').to_a)
 end
 
 def parse_prod(str)

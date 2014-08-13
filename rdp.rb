@@ -4,7 +4,7 @@ SUM  -> PROD + SUM
       | PROD
 PROD -> DIGIT + PROD
       | DIGIT
-DIGIT-> /[0-9]/
+NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers
 =end
 
 
@@ -23,11 +23,19 @@ def parse_digit(str)
 	return parse_wchar(str, ('0'..'9').to_a)
 end
 
+def parse_num(str)
+	if str =~ /(\A(\d+(\.\d*)?)|(\.\d+))/
+		str[0...$1.length] = ''		#remove matched number from str
+		return $1
+	end
+	raise "No number to parse in parse_num"
+end
+
 def parse_prod(str)
 
 	#print "parse_prod called on #{str}\n"
 
-	digit = parse_digit(str)
+	digit = parse_num(str)
 	
 	begin
 		a = parse_wchar(str, "*/")
@@ -61,3 +69,9 @@ def parse_sum(str)
 end
 
 print "#{parse_sum("1+2*3-4/5+6")}\n"
+
+
+#TODO: use hashes instead of lists
+#TODO: robust - sign
+#TODO: use numbers instead of strings in tree
+#TODO: use numbers instead of digits

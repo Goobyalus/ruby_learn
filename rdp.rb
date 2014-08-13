@@ -94,3 +94,4 @@ print "eval result is: #{eval(parse_tree)}\n\n"
 
 #TODO: robust - sign
 #TODO: use better regex based on /\A[-+]?[0-9]*\.?[0-9]+\Z/
+#TODO: parentheses

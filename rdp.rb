@@ -28,9 +28,12 @@ def parse_prod(str)
 	end
 	
 	case a
-	when '*' op = :PROD
-	when '/' op = :DIV
+	when '*' then op = :PROD
+	when '/' then op = :DIV
 	end
 	
 	return [op, digit, parse_prod(str)]
 end
+
+
+print parse_prod("1 * 2")

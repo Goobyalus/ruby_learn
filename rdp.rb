@@ -9,6 +9,7 @@ DIGIT-> /[0-9]/
 
 
 def parse_wchar(str, chrs)
+	#print "parse_wchar called on #{str}\n"
 	if chrs.include? str[0]
 		return [str[0], str[1...str.length]]
 	end
@@ -16,11 +17,15 @@ def parse_wchar(str, chrs)
 end
 
 def parse_digit(str)
+	#print "parse_digit called on #{str}\n"
 	return parse_wchar(str, ('0'..'9').to_a)
 end
 
 def parse_prod(str)
-	digit = parse_digit(str)
+
+	#print "parse_prod called on #{str}\n"
+
+	digit, str = parse_digit(str)
 	
 	begin
 		a, str = parse_wchar(str, "*/")
@@ -37,4 +42,4 @@ def parse_prod(str)
 end
 
 
-print parse_prod("1*2")
+print "#{parse_prod("1*2")}\n"

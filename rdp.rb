@@ -4,7 +4,7 @@ SUM  -> PROD + SUM
       | PROD
 PROD -> DIGIT + PROD
       | DIGIT
-NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers
+NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers [regex can be improved]
 =end
 
 

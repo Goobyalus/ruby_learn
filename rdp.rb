@@ -92,8 +92,5 @@ print "parsing result is: #{parse_tree}\n\n"
 print "eval result is: #{eval(parse_tree)}\n\n"
 
 
-#TODO: use hashes instead of lists
 #TODO: robust - sign
-#TODO: use numbers instead of strings in tree
-#TODO: use numbers instead of digits
 #TODO: use better regex based on /\A[-+]?[0-9]*\.?[0-9]+\Z/

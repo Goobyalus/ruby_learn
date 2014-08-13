@@ -68,7 +68,7 @@ def parse_sum(str)
 	return [op, prod, parse_sum(str)]
 end
 
-print "#{parse_sum("1+2*3-4/5+6")}\n"
+print "#{parse_sum("1.1+.2*3-444/55.55+.6666")}\n"
 
 
 #TODO: use hashes instead of lists

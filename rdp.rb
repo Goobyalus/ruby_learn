@@ -7,9 +7,7 @@ PROD -> DIGIT + PROD
 NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers [regex can be improved]
 =end
 
-
 def parse_wchar(str, chrs)
-	#print "parse_wchar called on #{str}\n"
 	if chrs.include? str[0]
 		temp = str[0]
 		str[0]=''
@@ -19,22 +17,29 @@ def parse_wchar(str, chrs)
 end
 
 def parse_digit(str)
-	#print "parse_digit called on #{str}\n"
 	return parse_wchar(str, ('0'..'9').to_a)
 end
 
+def parse_paren(str)
+	#print "parse_paren(#{str})\n"
+	parse_wchar(str, "(")
+	sum = parse_sum(str)
+	parse_wchar(str, ")")
+	return sum
+end
+
 def parse_num(str)
-	if str =~ /(\A(\d+(\.\d*)?)|(\.\d+))/
+	#print "parse_num(#{str})\n"
+	if str =~ /(\A[-+]?[0-9]*\.?[0-9]+)/
+		#print "matched #{$1}!\n"
 		str[0...$1.length] = ''		#remove matched number from str
 		return $1.to_f
 	end
-	raise "No number to parse in parse_num"
+	return parse_paren(str)
 end
 
 def parse_prod(str)
-
-	#print "parse_prod called on #{str}\n"
-
+	#print "parse_prod(#{str})\n"
 	digit = parse_num(str)
 	
 	begin
@@ -52,6 +57,7 @@ def parse_prod(str)
 end
 
 def parse_sum(str)
+	#print "parse_sum(#{str})\n"
 	prod = parse_prod(str)
 	
 	begin
@@ -69,8 +75,6 @@ def parse_sum(str)
 end
 
 def eval(root)
-	#print "calling eval on #{root}"
-
 	if not root.is_a?(Hash) then return root end
 	lo = root[:lo]
 	ro = root[:ro]
@@ -85,7 +89,7 @@ def eval(root)
 	end
 end
 
-test_str = "1.1+.2*3-444/55.55+.6666-.0"
+test_str = "(1.1+.2)*3-444/55.55+.6666-.0"
 print "\n\ntest_str is: #{test_str}\n\n"
 parse_tree = parse_sum(test_str)
 print "parsing result is: #{parse_tree}\n\n"
@@ -94,4 +98,4 @@ print "eval result is: #{eval(parse_tree)}\n\n"
 
 #TODO: robust - sign
 #TODO: use better regex based on /\A[-+]?[0-9]*\.?[0-9]+\Z/
-#TODO: parentheses
+#TODO: parentheses#

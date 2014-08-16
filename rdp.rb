@@ -4,7 +4,7 @@ SUM  -> PROD + SUM
       | PROD
 PROD -> DIGIT + PROD
       | DIGIT
-NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers [regex can be improved]
+NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers 
 =end
 
 def parse_wchar(str, chrs)
@@ -97,5 +97,3 @@ print "eval result is: #{eval(parse_tree)}\n\n"
 
 
 #TODO: robust - sign
-#TODO: use better regex based on /\A[-+]?[0-9]*\.?[0-9]+\Z/
-#TODO: parentheses#

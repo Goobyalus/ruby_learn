@@ -1,7 +1,7 @@
 
 
 
-#graph represented as hash{string => hash{string => ?}}
+#graph represented as hash{obj => hash{obj => edge distance}}
 
 
 def dijkstra(graph, source)

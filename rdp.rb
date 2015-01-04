@@ -2,7 +2,7 @@
 =begin
 SUM  -> PROD + SUM
       | PROD
-PROD -> DIGIT + PROD
+PROD -> DIGIT * PROD
       | DIGIT
 NUM  -> /(\A(\d+(\.\d*)?)|(\.\d+))/	#numbers 
 =end
